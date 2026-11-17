@@ -1,0 +1,21 @@
+# Yüklenen paketler (npm install ile yeniden oluşur)
+node_modules/
+
+# Derleme çıktıları (npm run build ile yeniden oluşur)
+dist/
+*.tsbuildinfo
+
+# Vercel bağlantı bilgileri
+.vercel
+
+# Gizli ayarlar
+.env
+.env.*
+
+# macOS ve editör dosyaları
+.DS_Store
+**/.DS_Store
+.openai/
+
+# Orijinal (küçültülmemiş) medya yedekleri
+_yedek/

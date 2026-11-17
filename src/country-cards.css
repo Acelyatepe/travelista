@@ -1,0 +1,179 @@
+/* Ülke sayfası: kartlı bilgi tasarımı */
+.country-content.cards {
+  --card-bg: #fbf8f1;
+  --card-line: rgba(24, 34, 30, 0.12);
+  padding: 70px 6vw 110px;
+  max-width: 1280px;
+  margin-inline: auto;
+  display: grid;
+  gap: 56px;
+}
+.country-content.cards section {
+  display: block;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border-top: 0;
+  scroll-margin-top: 130px;
+}
+.country-content.cards section > div {
+  max-width: none;
+}
+.country-content.cards h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  font: 400 clamp(32px, 4.4vw, 56px) "Italiana", serif;
+  margin: 0 0 26px;
+}
+.country-content.cards h2 small {
+  font: 500 12px "DM Sans", sans-serif;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+.country-content.cards .overview-card > div {
+  border: 1px solid var(--card-line);
+  border-radius: 20px;
+  background: var(--card-bg);
+  padding: clamp(26px, 4vw, 52px);
+  box-shadow: 0 14px 40px #23332910;
+}
+.country-content.cards .overview-card p {
+  max-width: 78ch;
+  margin: 0;
+  font-size: clamp(17px, 1.6vw, 20px);
+  line-height: 1.85;
+}
+.country-content.cards .info-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+  gap: 18px;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.country-content.cards .info-cards li {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px 24px 26px;
+  border: 1px solid var(--card-line);
+  border-top: 3px solid var(--accent);
+  border-radius: 16px;
+  background: var(--card-bg);
+  box-shadow: 0 8px 26px #2333290c;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.country-content.cards .info-cards li:last-child {
+  border-bottom: 1px solid var(--card-line);
+}
+.country-content.cards .info-cards li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px #23332916;
+}
+.country-content.cards .info-cards h3 {
+  margin: 0;
+  font: 400 24px/1.2 "Italiana", serif;
+  color: var(--ink);
+}
+.country-content.cards .info-cards p {
+  margin: 0;
+  max-width: none;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: #59645f;
+}
+.country-content.cards .fact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.country-content.cards .fact-card > div {
+  height: 100%;
+  padding: 26px 26px 30px;
+  border: 1px solid var(--card-line);
+  border-radius: 18px;
+  background: linear-gradient(160deg, #fbf8f1, #f3ede0);
+  box-shadow: 0 8px 26px #2333290c;
+}
+.country-content.cards .fact-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  background: #c46d3c1f;
+  color: var(--accent);
+}
+.country-content.cards .fact-icon svg {
+  width: 21px;
+  height: 21px;
+}
+.country-content.cards .fact-card h2 {
+  font-size: 28px;
+  margin: 0 0 12px;
+}
+.country-content.cards .fact-card p {
+  margin: 0;
+  max-width: none;
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+.country-content.cards section.search-highlight > div {
+  animation: atlasHighlight 1.8s ease;
+}
+@media (max-width: 1000px) {
+  .country-content.cards .fact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .country-content.cards {
+    padding: 44px 16px 80px;
+    gap: 40px;
+  }
+  .country-content.cards .fact-grid {
+    grid-template-columns: 1fr;
+  }
+  .country-content.cards .info-cards {
+    grid-template-columns: 1fr;
+  }
+}
+.country-content.cards .list-intro {
+  max-width: 78ch;
+  margin: -6px 0 22px;
+  font-size: 17px;
+  line-height: 1.75;
+  color: #59645f;
+}
+.country-content.cards .fact-card p + p {
+  margin-top: 10px;
+}
+.country-content.cards .overview-card p + p {
+  margin-top: 16px;
+}
+.country-content.cards .fact-card strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.country-content.cards .fact-card#konaklama {
+  grid-column: 1 / -1;
+}
+.country-content.cards .fact-card#konaklama > div {
+  columns: 2 340px;
+  column-gap: 40px;
+}
+.country-content.cards .fact-card#konaklama .fact-icon,
+.country-content.cards .fact-card#konaklama h2 {
+  column-span: all;
+}
+.country-content.cards .fact-card#gidis {
+  grid-column: span 2;
+}
+@media (max-width: 640px) {
+  .country-content.cards .fact-card#gidis {
+    grid-column: auto;
+  }
+}

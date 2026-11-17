@@ -1,0 +1,596 @@
+export type Lang = "tr" | "en" | "de";
+export type Text = Record<Lang, string>;
+const t = (tr: string, en: string, de: string): Text => ({ tr, en, de });
+export const continents = [
+  { id: "europe", name: t("Avrupa", "Europe", "Europa") },
+  { id: "asia", name: t("Asya", "Asia", "Asien") },
+  { id: "africa", name: t("Afrika", "Africa", "Afrika") },
+  {
+    id: "north-america",
+    name: t("Kuzey Amerika", "North America", "Nordamerika"),
+  },
+  {
+    id: "south-america",
+    name: t("Güney Amerika", "South America", "Südamerika"),
+  },
+  { id: "oceania", name: t("Okyanusya", "Oceania", "Ozeanien") },
+] as const;
+const raw = [
+  [
+    "turkiye",
+    "Türkiye",
+    "Turkey",
+    "Türkei",
+    "europe",
+    "İstanbul · Kapadokya · Kaş",
+  ],
+  [
+    "germany",
+    "Almanya",
+    "Germany",
+    "Deutschland",
+    "europe",
+    "Berlin · Münih · Hamburg",
+  ],
+  [
+    "switzerland",
+    "İsviçre",
+    "Switzerland",
+    "Schweiz",
+    "europe",
+    "Zürih · Luzern · Zermatt",
+  ],
+  [
+    "latvia",
+    "Letonya",
+    "Latvia",
+    "Lettland",
+    "europe",
+    "Riga · Cēsis · Kuldīga",
+  ],
+  ["france", "Fransa", "France", "Frankreich", "europe", "Paris · Lyon · Nice"],
+  [
+    "italy",
+    "İtalya",
+    "Italy",
+    "Italien",
+    "europe",
+    "Roma · Floransa · Venedik",
+  ],
+  [
+    "spain",
+    "İspanya",
+    "Spain",
+    "Spanien",
+    "europe",
+    "Madrid · Barselona · Sevilla",
+  ],
+  [
+    "portugal",
+    "Portekiz",
+    "Portugal",
+    "Portugal",
+    "europe",
+    "Lizbon · Porto · Faro",
+  ],
+  [
+    "netherlands",
+    "Hollanda",
+    "Netherlands",
+    "Niederlande",
+    "europe",
+    "Amsterdam · Rotterdam · Utrecht",
+  ],
+  [
+    "belgium",
+    "Belçika",
+    "Belgium",
+    "Belgien",
+    "europe",
+    "Brüksel · Brugge · Gent",
+  ],
+  [
+    "austria",
+    "Avusturya",
+    "Austria",
+    "Österreich",
+    "europe",
+    "Viyana · Salzburg · Innsbruck",
+  ],
+  [
+    "czechia",
+    "Çekya",
+    "Czechia",
+    "Tschechien",
+    "europe",
+    "Prag · Brno · Český Krumlov",
+  ],
+  [
+    "poland",
+    "Polonya",
+    "Poland",
+    "Polen",
+    "europe",
+    "Varşova · Kraków · Gdańsk",
+  ],
+  [
+    "hungary",
+    "Macaristan",
+    "Hungary",
+    "Ungarn",
+    "europe",
+    "Budapeşte · Eger · Pécs",
+  ],
+  [
+    "croatia",
+    "Hırvatistan",
+    "Croatia",
+    "Kroatien",
+    "europe",
+    "Dubrovnik · Split · Zagreb",
+  ],
+  [
+    "slovenia",
+    "Slovenya",
+    "Slovenia",
+    "Slowenien",
+    "europe",
+    "Ljubljana · Bled · Piran",
+  ],
+  [
+    "greece",
+    "Yunanistan",
+    "Greece",
+    "Griechenland",
+    "europe",
+    "Atina · Selanik · Girit",
+  ],
+  [
+    "denmark",
+    "Danimarka",
+    "Denmark",
+    "Dänemark",
+    "europe",
+    "Kopenhag · Aarhus · Odense",
+  ],
+  [
+    "sweden",
+    "İsveç",
+    "Sweden",
+    "Schweden",
+    "europe",
+    "Stockholm · Göteborg · Malmö",
+  ],
+  [
+    "norway",
+    "Norveç",
+    "Norway",
+    "Norwegen",
+    "europe",
+    "Oslo · Bergen · Tromsø",
+  ],
+  [
+    "finland",
+    "Finlandiya",
+    "Finland",
+    "Finnland",
+    "europe",
+    "Helsinki · Turku · Rovaniemi",
+  ],
+  [
+    "estonia",
+    "Estonya",
+    "Estonia",
+    "Estland",
+    "europe",
+    "Tallinn · Tartu · Pärnu",
+  ],
+  [
+    "lithuania",
+    "Litvanya",
+    "Lithuania",
+    "Litauen",
+    "europe",
+    "Vilnius · Kaunas · Klaipėda",
+  ],
+  [
+    "iceland",
+    "İzlanda",
+    "Iceland",
+    "Island",
+    "europe",
+    "Reykjavík · Vík · Akureyri",
+  ],
+  [
+    "ireland",
+    "İrlanda",
+    "Ireland",
+    "Irland",
+    "europe",
+    "Dublin · Galway · Cork",
+  ],
+  [
+    "united-kingdom",
+    "Birleşik Krallık",
+    "United Kingdom",
+    "Vereinigtes Königreich",
+    "europe",
+    "Londra · Edinburgh · Bath",
+  ],
+  ["japan", "Japonya", "Japan", "Japan", "asia", "Tokyo · Kyoto · Osaka"],
+  [
+    "morocco",
+    "Fas",
+    "Morocco",
+    "Marokko",
+    "africa",
+    "Marakeş · Fes · Essaouira",
+  ],
+  [
+    "georgia",
+    "Gürcistan",
+    "Georgia",
+    "Georgien",
+    "asia",
+    "Tiflis · Batum · Kazbegi",
+  ],
+  [
+    "montenegro",
+    "Karadağ",
+    "Montenegro",
+    "Montenegro",
+    "europe",
+    "Kotor · Budva · Podgorica",
+  ],
+  [
+    "united-states",
+    "Amerika Birleşik Devletleri",
+    "United States",
+    "Vereinigte Staaten",
+    "north-america",
+    "New York · Los Angeles · Miami",
+  ],
+  [
+    "canada",
+    "Kanada",
+    "Canada",
+    "Kanada",
+    "north-america",
+    "Toronto · Vancouver · Montreal",
+  ],
+  [
+    "russia",
+    "Rusya",
+    "Russia",
+    "Russland",
+    "asia",
+    "Moskova · St. Petersburg · Kazan",
+  ],
+  ["egypt", "Mısır", "Egypt", "Ägypten", "africa", "Kahire · Luksor · Asvan"],
+  [
+    "united-arab-emirates",
+    "Birleşik Arap Emirlikleri",
+    "United Arab Emirates",
+    "Vereinigte Arabische Emirate",
+    "asia",
+    "Dubai · Abu Dabi · Sharjah",
+  ],
+  [
+    "thailand",
+    "Tayland",
+    "Thailand",
+    "Thailand",
+    "asia",
+    "Bangkok · Chiang Mai · Phuket",
+  ],
+  [
+    "indonesia",
+    "Endonezya",
+    "Indonesia",
+    "Indonesien",
+    "asia",
+    "Bali · Cakarta · Yogyakarta",
+  ],
+  [
+    "south-africa",
+    "Güney Afrika",
+    "South Africa",
+    "Südafrika",
+    "africa",
+    "Cape Town · Johannesburg · Durban",
+  ],
+  [
+    "kenya",
+    "Kenya",
+    "Kenya",
+    "Kenia",
+    "africa",
+    "Nairobi · Mombasa · Maasai Mara",
+  ],
+  [
+    "tanzania",
+    "Tanzanya",
+    "Tanzania",
+    "Tansania",
+    "africa",
+    "Zanzibar · Arusha · Darüsselam",
+  ],
+  [
+    "mexico",
+    "Meksika",
+    "Mexico",
+    "Mexiko",
+    "north-america",
+    "Mexico City · Oaxaca · Tulum",
+  ],
+  [
+    "costa-rica",
+    "Kosta Rika",
+    "Costa Rica",
+    "Costa Rica",
+    "north-america",
+    "San José · La Fortuna · Monteverde",
+  ],
+  [
+    "cuba",
+    "Küba",
+    "Cuba",
+    "Kuba",
+    "north-america",
+    "Havana · Trinidad · Varadero",
+  ],
+  [
+    "brazil",
+    "Brezilya",
+    "Brazil",
+    "Brasilien",
+    "south-america",
+    "Rio de Janeiro · São Paulo · Salvador",
+  ],
+  [
+    "argentina",
+    "Arjantin",
+    "Argentina",
+    "Argentinien",
+    "south-america",
+    "Buenos Aires · Mendoza · Bariloche",
+  ],
+  ["peru", "Peru", "Peru", "Peru", "south-america", "Lima · Cusco · Arequipa"],
+  [
+    "chile",
+    "Şili",
+    "Chile",
+    "Chile",
+    "south-america",
+    "Santiago · Valparaíso · San Pedro",
+  ],
+  [
+    "colombia",
+    "Kolombiya",
+    "Colombia",
+    "Kolumbien",
+    "south-america",
+    "Bogotá · Medellín · Cartagena",
+  ],
+  [
+    "australia",
+    "Avustralya",
+    "Australia",
+    "Australien",
+    "oceania",
+    "Sidney · Melbourne · Cairns",
+  ],
+  [
+    "new-zealand",
+    "Yeni Zelanda",
+    "New Zealand",
+    "Neuseeland",
+    "oceania",
+    "Auckland · Queenstown · Wellington",
+  ],
+  ["fiji", "Fiji", "Fiji", "Fidschi", "oceania", "Nadi · Suva · Mamanuca"],
+  ["samoa", "Samoa", "Samoa", "Samoa", "oceania", "Apia · Savai'i · Upolu"],
+  [
+    "vanuatu",
+    "Vanuatu",
+    "Vanuatu",
+    "Vanuatu",
+    "oceania",
+    "Port Vila · Espiritu Santo · Tanna",
+  ],
+] as const;
+export interface Country {
+  id: string;
+  slug: string;
+  name: Text;
+  continent: string;
+  short: Text;
+  overview: Text;
+  cities: string[];
+  places: Text[];
+  history: Text[];
+  nature: Text[];
+  foods: Text[];
+  budget: Text;
+  bestTime: Text;
+  visa: Text;
+  transport: Text;
+  stay: Text;
+  arrival: Text;
+  gallery: string[];
+  articles: Text[];
+  tips: Text[];
+  images: { hero: string; heroVideo: string; card: string; gallery: string[] };
+  featured: boolean;
+}
+const descriptions = {
+  tr: "",
+  en: "A refined journey through layered cities, local tables and unforgettable routes.",
+  de: "Eine besondere Reise durch vielschichtige Städte, lokale Küche und unvergessliche Routen.",
+};
+export const countries: Country[] = raw.map((r, i) => {
+  const [slug, tr, en, de, continent, cityLine] = r;
+  const cities = cityLine.split(" · ");
+  return {
+    id: `c${i + 1}`,
+    slug,
+    name: t(tr, en, de),
+    continent,
+    short: descriptions,
+    overview: t(
+      "",
+      `${en} rewards curious travellers with a vivid meeting of history, nature and everyday life.`,
+      `${de} verbindet Geschichte, Natur und Alltag zu einer Reise voller Kontraste.`,
+    ),
+    cities,
+    places: [
+      t("", `${cities[0]} central route`, `Zentrale Route durch ${cities[0]}`),
+      t("", "Local markets", "Lokale Märkte"),
+      t("", "Scenic routes", "Panoramarouten"),
+    ],
+    history: [
+      t("", "Historic centre", "Historisches Zentrum"),
+      t("", "Museum district", "Museumsviertel"),
+      t("", "Architectural heritage", "Architektonisches Erbe"),
+    ],
+    nature: [
+      t("", "Protected natural areas", "Geschützte Naturgebiete"),
+      t("", "Coastal and lake routes", "Küsten- und Seenrouten"),
+      t("", "Hiking trails", "Wanderwege"),
+    ],
+    foods: [
+      t("", "Local table", "Lokale Küche"),
+      t("", "Seasonal flavours", "Saisonale Spezialitäten"),
+      t("", "Street food", "Streetfood"),
+    ],
+    budget: t(
+      "",
+      "Moderate — book early for better value.",
+      "Mittel — früh buchen lohnt sich.",
+    ),
+    bestTime: t(
+      "",
+      "Spring and autumn; varies by region.",
+      "Frühling und Herbst; je nach Region.",
+    ),
+    visa: t(
+      "",
+      "Visa rules may change by nationality and date. Check official sources before travel.",
+      "Visabestimmungen können sich ändern. Prüfen Sie vor der Reise offizielle Quellen.",
+    ),
+    transport: t(
+      "",
+      "Intercity rail and bus; public transit in cities.",
+      "Bahn und Bus zwischen Städten; Nahverkehr vor Ort.",
+    ),
+    stay: t(
+      "",
+      "Central districts for a first visit; local neighbourhoods for a slower stay.",
+      "Zentrale Viertel für den ersten Besuch; lokale Gegenden für mehr Ruhe.",
+    ),
+    arrival: t(
+      "",
+      "Major airports have regular links to city centres.",
+      "Von großen Flughäfen bestehen regelmäßige Verbindungen ins Zentrum.",
+    ),
+    gallery: [
+      "gallery-01.webp",
+      "gallery-02.webp",
+      "gallery-03.webp",
+      "gallery-04.webp",
+    ],
+    articles: [],
+    tips: [
+      t(
+        "",
+        "Visit popular sights early in the morning.",
+        "Besuche beliebte Orte früh am Morgen.",
+      ),
+      t(
+        "",
+        "Compare local transport passes.",
+        "Vergleiche lokale Nahverkehrskarten.",
+      ),
+      t(
+        "",
+        "Carry some cash for small businesses.",
+        "Halte für kleine Betriebe etwas Bargeld bereit.",
+      ),
+    ],
+    images: {
+      hero: `/images/countries/${slug}/hero.${i < 4 ? "png" : "webp"}`,
+      heroVideo: `/images/countries/${slug}/hero.mp4`,
+      card: `/images/countries/${slug}/card.${i < 4 ? "png" : "webp"}`,
+      gallery: [1, 2, 3, 4].map(
+        (n) => `/images/countries/${slug}/gallery-0${n}.webp`,
+      ),
+    },
+    featured: [
+      "turkiye",
+      "germany",
+      "switzerland",
+      "latvia",
+      "montenegro",
+      "japan",
+    ].includes(slug),
+  };
+});
+export const ui = {
+  tr: {
+    nav: ["Destinasyonlar", "Gezi Yazıları", "Hakkında"],
+    heroEyebrow: "SEYAHATİN YENİ RİTMİ",
+    heroTitle: "Dünya,\nyavaşça açılır.",
+    heroText:
+      "Gürültünün ötesinde; insanları, sofraları ve coğrafyalarıyla hatırlanan yolculuklar.",
+    explore: "Keşfe başla",
+    intro: "Bir yere gitmekten fazlası.",
+    introText:
+      "Travelista, rotaları tüketilecek listeler olarak değil; içinde vakit geçirilecek hikâyeler olarak anlatır.",
+    popular: "Seçili rotalar",
+    all: "Tüm destinasyonlar",
+    continents: "Kıtalar boyunca",
+    journal: "Seyahat notları",
+    season: "Ruh hâline göre yolculuk",
+    search: "Ülke veya şehir ara",
+    noResult: "Bu aramayla eşleşen rota bulunamadı.",
+    clear: "Filtreleri temizle",
+  },
+  en: {
+    nav: ["Destinations", "Journal", "About"],
+    heroEyebrow: "A NEW RHYTHM OF TRAVEL",
+    heroTitle: "The world\nunfolds slowly.",
+    heroText:
+      "Beyond the noise; journeys remembered through people, tables and landscapes.",
+    explore: "Begin exploring",
+    intro: "More than getting somewhere.",
+    introText:
+      "Travelista sees routes not as lists to consume, but stories to spend time inside.",
+    popular: "Selected journeys",
+    all: "All destinations",
+    continents: "Across continents",
+    journal: "Travel notes",
+    season: "Travel by feeling",
+    search: "Search country or city",
+    noResult: "No route matches your search.",
+    clear: "Clear filters",
+  },
+  de: {
+    nav: ["Reiseziele", "Reiseberichte", "Über uns"],
+    heroEyebrow: "EIN NEUER RHYTHMUS DES REISENS",
+    heroTitle: "Die Welt\nentfaltet sich.",
+    heroText:
+      "Jenseits des Lärms; Reisen, die durch Menschen, Tafeln und Landschaften bleiben.",
+    explore: "Entdecken",
+    intro: "Mehr als nur ankommen.",
+    introText:
+      "Travelista versteht Routen nicht als Listen, sondern als Geschichten, in denen man Zeit verbringt.",
+    popular: "Ausgewählte Reisen",
+    all: "Alle Reiseziele",
+    continents: "Über Kontinente",
+    journal: "Reisenotizen",
+    season: "Reisen nach Gefühl",
+    search: "Land oder Stadt suchen",
+    noResult: "Keine Route passt zu Ihrer Suche.",
+    clear: "Filter löschen",
+  },
+};

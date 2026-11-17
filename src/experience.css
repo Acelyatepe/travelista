@@ -1,0 +1,460 @@
+.mountain-opening {
+  height: 108svh;
+  position: relative;
+  background: #07150d;
+  z-index: 12;
+}
+.terrain-canvas {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+  opacity: calc(1 - var(--terrain-progress, 0));
+  filter: blur(calc(var(--terrain-progress, 0) * 7px));
+  transform: scale(calc(1 - var(--terrain-progress, 0) * 0.06));
+  transform-origin: center;
+  will-change: opacity, filter, transform;
+  background: transparent;
+  z-index: 1;
+}
+.alpine-film {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100svh;
+  object-fit: cover;
+  z-index: 0;
+  filter: saturate(1.08) contrast(1.04) brightness(0.82);
+}
+.terrain-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.terrain-vignette {
+  position: absolute;
+  inset: 0 0 8svh;
+  pointer-events: none;
+  z-index: 2;
+  background:
+    radial-gradient(ellipse at 50% 40%, transparent 42%, #03100877 100%),
+    linear-gradient(0deg, #07150d99, transparent 28%);
+}
+.site-header {
+  position: fixed;
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease,
+    background 0.45s ease;
+}
+.site-header.concealed {
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+.site-header.revealed {
+  opacity: 1;
+  transform: none;
+  background: #17231ef2;
+  backdrop-filter: blur(14px);
+}
+.welcome {
+  min-height: 82svh;
+  background: #17231e;
+  color: #f1efe9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.welcome h1 {
+  font:
+    400 clamp(62px, 9vw, 132px)/0.92 "Italiana",
+    serif;
+  letter-spacing: -0.045em;
+  max-width: 1100px;
+  margin: 28px 0;
+}
+.welcome p {
+  max-width: 700px;
+  font-size: 18px;
+  line-height: 1.75;
+  color: #dfe5ddba;
+}
+.welcome > a {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 24px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ffffff66;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+}
+.gallery-item {
+  display: block;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: zoom-in;
+  color: inherit;
+}
+.video-hero,
+.video-hero > .image-box {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.video-hero video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+.video-hero video.ready {
+  opacity: 1;
+}
+.country-hero > .video-hero:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #14201dc9, transparent 70%);
+  pointer-events: none;
+}
+.gallery-description {
+  max-width: 760px;
+  color: #ffffffa8;
+  line-height: 1.7;
+  margin: -15px 0 35px;
+}
+.gallery-description p {
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #ffffff1f;
+}
+.gallery-item .image-box {
+  width: 100%;
+}
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #07100ef2;
+  display: grid;
+  place-items: center;
+  padding: 5vw;
+  animation: pageIn 0.3s ease;
+}
+.lightbox > .image-box {
+  width: min(1100px, 90vw);
+  height: min(760px, 80vh);
+}
+.lightbox > button {
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  border: 1px solid #ffffff55;
+  border-radius: 50%;
+  background: #15231d;
+  color: white;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 30;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid #ffffff55;
+  background: #17231ef0;
+  color: white;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transform: translateY(18px);
+  pointer-events: none;
+  transition: 0.3s;
+}
+.back-to-top.visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  cursor: pointer;
+}
+@media (max-width: 800px) {
+  .mountain-opening {
+    height: 105svh;
+  }
+  .terrain-canvas {
+    transform: none;
+  }
+  .lightbox {
+    padding: 20px;
+  }
+  .lightbox > .image-box {
+    width: 100%;
+    height: 70vh;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .terrain-canvas {
+    filter: none;
+    transform: none;
+  }
+  .site-header {
+    transition: opacity 0.15s ease;
+  }
+}
+
+/* Ana sayfa açılışı: yalnızca kesintisiz video, metin/3D katmanı yok. */
+.homepage-video {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+  background: #10221c;
+}
+
+.homepage-video video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+@media (max-width: 700px) {
+  .homepage-video {
+    min-height: 560px;
+    height: 88svh;
+  }
+}
+
+/* Dört aşamalı sinematik ana sayfa deneyimi */
+.mountain-opening {
+  height: 185svh;
+  isolation: isolate;
+  --story-progress: 0;
+}
+.terrain-canvas {
+  position: fixed;
+  inset: 0;
+  opacity: 1;
+  filter: none;
+  transform: none;
+  transition: filter 1.4s ease;
+}
+.alpine-film {
+  transition:
+    filter 1.8s ease,
+    opacity 1.5s ease;
+  filter: saturate(0.18) hue-rotate(165deg) contrast(1.18) brightness(0.42);
+}
+.mountain-opening[data-phase="1"] .alpine-film {
+  filter: grayscale(1) contrast(0.78) brightness(1.3);
+  opacity: 0.8;
+}
+.mountain-opening[data-phase="2"] .alpine-film {
+  filter: saturate(1.3) hue-rotate(-4deg) contrast(1.08) brightness(0.8);
+  opacity: 1;
+}
+.mountain-opening[data-phase="3"] .alpine-film {
+  filter: saturate(1.6) sepia(0.28) hue-rotate(18deg) contrast(1.08)
+    brightness(0.72);
+  transform: scale(1.12);
+}
+.terrain-rays {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 14vw,
+      #77aaff0b 14.1vw 14.2vw
+    ),
+    linear-gradient(100deg, transparent 15%, #456aff12 45%, transparent 65%);
+  mix-blend-mode: screen;
+}
+.experience-wordmark,
+.capital-word,
+.living-word,
+.terrain-editorial,
+.experience-hint,
+.experience-replay {
+  position: fixed;
+  z-index: 4;
+  color: #eef2ed;
+  transition:
+    opacity 1.1s ease,
+    transform 1.1s ease;
+}
+.experience-wordmark {
+  left: 7vw;
+  top: 48%;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 12px;
+  letter-spacing: 0.34em;
+}
+.particle-globe {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0 1px, transparent 1.5px);
+  background-size: 6px 6px;
+  mask-image: radial-gradient(circle, #000 60%, transparent 63%);
+}
+.capital-word {
+  inset: 44% 0 auto;
+  text-align: center;
+  font-size: clamp(45px, 8vw, 120px);
+  font-weight: 200;
+  letter-spacing: 0.5em;
+  color: #eef2ed;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.living-word {
+  inset: 48% 0 auto;
+  text-align: center;
+  font-size: clamp(22px, 4vw, 62px);
+  font-weight: 300;
+  letter-spacing: 0.42em;
+  opacity: 0;
+  transform: translateY(25px);
+}
+.terrain-editorial {
+  left: 12vw;
+  top: 27%;
+  width: min(670px, 76vw);
+  opacity: 0;
+  transform: translateY(30px);
+}
+.terrain-editorial p {
+  font-size: clamp(21px, 2.5vw, 39px);
+  font-weight: 300;
+  line-height: 1.45;
+  letter-spacing: 0.12em;
+  margin: 0;
+}
+.terrain-editorial small {
+  display: block;
+  width: 250px;
+  margin: 35px 0 0 auto;
+  line-height: 1.7;
+  letter-spacing: 0.12em;
+  color: #f4edc6a8;
+}
+.experience-hint {
+  left: 4vw;
+  bottom: 35px;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+}
+.experience-replay {
+  right: 4vw;
+  bottom: 24px;
+  width: 46px;
+  height: 46px;
+  border: 1px solid #ffffff55;
+  border-radius: 50%;
+  background: #0a15116b;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.experience-replay svg {
+  width: 15px;
+}
+.mountain-opening[data-phase="1"] .experience-wordmark,
+.mountain-opening[data-phase="2"] .experience-wordmark,
+.mountain-opening[data-phase="3"] .experience-wordmark {
+  opacity: 0;
+  transform: translateY(-15px);
+}
+.mountain-opening[data-phase="1"] .capital-word {
+  opacity: 0.38;
+  transform: none;
+}
+.mountain-opening[data-phase="2"] .living-word {
+  opacity: 1;
+  transform: none;
+}
+.mountain-opening[data-phase="3"] .terrain-editorial {
+  opacity: 1;
+  transform: none;
+}
+.mountain-opening[data-phase="3"] .experience-hint {
+  opacity: 0;
+}
+.site-header.revealed {
+  background: linear-gradient(#07120db3, transparent);
+  backdrop-filter: none;
+  border-bottom-color: #ffffff1c;
+  height: 66px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+}
+.site-header .logo {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.25em;
+}
+.site-header nav {
+  font-size: 9px;
+}
+.welcome {
+  position: relative;
+  z-index: 5;
+}
+@media (max-width: 800px) {
+  .mountain-opening {
+    height: 170svh;
+  }
+  .terrain-editorial {
+    left: 24px;
+    top: 24%;
+    width: calc(100vw - 48px);
+  }
+  .terrain-editorial p {
+    font-size: 20px;
+    letter-spacing: 0.08em;
+  }
+  .experience-wordmark {
+    left: 24px;
+  }
+  .experience-hint {
+    left: 24px;
+  }
+  .capital-word {
+    font-size: 38px;
+    letter-spacing: 0.25em;
+  }
+  .living-word {
+    font-size: 21px;
+    letter-spacing: 0.2em;
+  }
+  .terrain-rays {
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0 33vw,
+      #77aaff0b 33.1vw 33.3vw
+    );
+  }
+}
